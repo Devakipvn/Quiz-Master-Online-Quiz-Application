@@ -54,7 +54,7 @@ const CategoryPage: React.FC = () => {
       </div>
 
       {/* Categories Grid */}
-      <main className="flex-1 container mx-auto px-3 sm:px-4 -mt-4 sm:-mt-6 md:-mt-8 pb-6 sm:pb-8 md:pb-12">
+      <main className="flex-1 container mx-auto px-3 sm:px-4 mt-2 sm:-mt-4 md:-mt-6 pb-6 sm:pb-8 md:pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {quizCategories.map((category, index) => (
             <QuizCard
