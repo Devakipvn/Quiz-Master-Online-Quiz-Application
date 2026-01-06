@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     setIsLoading(false);
-    navigate('/instructions');
+    navigate('/categories');
   };
 
   return (
@@ -171,7 +171,10 @@ const LoginPage: React.FC = () => {
           {/* Sign Up Link */}
           <p className="text-center text-muted-foreground mt-6">
             Don't have an account?{' '}
-            <button className="text-primary font-medium hover:underline">
+            <button 
+              onClick={() => navigate('/register')}
+              className="text-primary font-medium hover:underline"
+            >
               Sign Up
             </button>
           </p>

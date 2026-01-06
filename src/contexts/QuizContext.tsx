@@ -1,45 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-
-// Mock quiz data - will be replaced with API calls
-const mockQuizData = {
-  title: "General Knowledge Quiz",
-  description: "Test your knowledge across various topics",
-  timePerQuestion: 30,
-  totalQuestions: 5,
-  passingScore: 60,
-  questions: [
-    {
-      id: 1,
-      question: "What is the capital city of Japan?",
-      options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
-      correctAnswer: 1,
-    },
-    {
-      id: 2,
-      question: "Which planet is known as the Red Planet?",
-      options: ["Venus", "Jupiter", "Mars", "Saturn"],
-      correctAnswer: 2,
-    },
-    {
-      id: 3,
-      question: "What is the largest mammal in the world?",
-      options: ["African Elephant", "Blue Whale", "Giraffe", "Polar Bear"],
-      correctAnswer: 1,
-    },
-    {
-      id: 4,
-      question: "Who painted the Mona Lisa?",
-      options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
-      correctAnswer: 2,
-    },
-    {
-      id: 5,
-      question: "What is the chemical symbol for gold?",
-      options: ["Ag", "Au", "Fe", "Cu"],
-      correctAnswer: 1,
-    },
-  ],
-};
+import { quizCategories, getCategoryById, QuizCategory } from '@/data/quizCategories';
 
 interface Question {
   id: number;
@@ -78,6 +38,8 @@ interface QuizResult {
 interface QuizContextType {
   // Quiz data
   quizData: QuizData | null;
+  selectedCategory: QuizCategory | null;
+  categories: QuizCategory[];
   currentQuestionIndex: number;
   userAnswers: UserAnswer[];
   quizResult: QuizResult | null;
@@ -89,6 +51,7 @@ interface QuizContextType {
   isTimerRunning: boolean;
   
   // Actions
+  selectCategory: (categoryId: string) => void;
   loadQuiz: () => Promise<void>;
   startQuiz: () => void;
   selectAnswer: (optionIndex: number) => void;
@@ -103,6 +66,7 @@ const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
 export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [quizData, setQuizData] = useState<QuizData | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<QuizCategory | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
@@ -112,16 +76,31 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [questionStartTime, setQuestionStartTime] = useState<number>(0);
 
-  // API placeholder - Load quiz data
-  const loadQuiz = useCallback(async () => {
-    // TODO: Replace with actual API call
-    // const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/quiz`);
-    // const data = await response.json();
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setQuizData(mockQuizData);
+  // Select a category
+  const selectCategory = useCallback((categoryId: string) => {
+    const category = getCategoryById(categoryId);
+    if (category) {
+      setSelectedCategory(category);
+      const quizDataFromCategory: QuizData = {
+        title: category.name,
+        description: category.description,
+        timePerQuestion: category.timePerQuestion,
+        totalQuestions: category.questions.length,
+        passingScore: category.passingScore,
+        questions: category.questions,
+      };
+      setQuizData(quizDataFromCategory);
+    }
   }, []);
+
+  // API placeholder - Load quiz data (for backward compatibility)
+  const loadQuiz = useCallback(async () => {
+    // If no category selected, use the first one
+    if (!selectedCategory && quizCategories.length > 0) {
+      selectCategory(quizCategories[0].id);
+    }
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }, [selectedCategory, selectCategory]);
 
   // Start the quiz
   const startQuiz = useCallback(() => {
@@ -247,6 +226,8 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const value: QuizContextType = {
     quizData,
+    selectedCategory,
+    categories: quizCategories,
     currentQuestionIndex,
     userAnswers,
     quizResult,
@@ -254,6 +235,7 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     isQuizCompleted,
     timeRemaining,
     isTimerRunning,
+    selectCategory,
     loadQuiz,
     startQuiz,
     selectAnswer,

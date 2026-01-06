@@ -60,7 +60,7 @@ const LandingPage: React.FC = () => {
               <Button 
                 variant="hero" 
                 size="xl" 
-                onClick={() => navigate('/login')}
+                onClick={() => navigate('/categories')}
                 className="group"
               >
                 Start Quiz
