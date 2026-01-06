@@ -73,7 +73,6 @@ const QuizPage: React.FC = () => {
   };
 
   const handleSubmitClick = () => {
-    const unansweredCount = quizData!.questions.length - userAnswers.length;
     setIsConfirmModalOpen(true);
   };
 
@@ -94,17 +93,17 @@ const QuizPage: React.FC = () => {
   const optionLabels = ['A', 'B', 'C', 'D'];
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-8">
+    <div className="min-h-screen bg-background p-3 sm:p-4 md:p-8">
       {/* Background decoration */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-10 left-1/4 w-48 md:w-64 h-48 md:h-64 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-1/4 w-56 md:w-72 h-56 md:h-72 bg-accent/5 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-2xl mx-auto relative">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-bold hidden sm:block">{quizData.title}</h1>
+        <div className="flex items-center justify-between mb-4 md:mb-6">
+          <h1 className="text-base sm:text-lg md:text-xl font-bold truncate mr-2">{quizData.title}</h1>
           <Timer onTimeUp={handleTimeUp} />
         </div>
 
@@ -112,23 +111,23 @@ const QuizPage: React.FC = () => {
         <ProgressBar 
           current={currentQuestionIndex + 1} 
           total={quizData.totalQuestions} 
-          className="mb-8"
+          className="mb-4 md:mb-8"
         />
 
         {/* Question Card */}
-        <QuizCard key={currentQuestion.id} className="mb-6">
+        <QuizCard key={currentQuestion.id} className="mb-4 md:mb-6">
           {/* Question Number Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-1.5 md:gap-2 px-2.5 md:px-3 py-0.5 md:py-1 rounded-full bg-primary/10 text-primary text-xs md:text-sm font-medium mb-3 md:mb-4">
             Question {currentQuestionIndex + 1}
           </div>
 
           {/* Question Text */}
-          <h2 className="text-xl md:text-2xl font-bold mb-8 leading-relaxed">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-6 md:mb-8 leading-relaxed">
             {currentQuestion.question}
           </h2>
 
           {/* Options */}
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-3">
             {currentQuestion.options.map((option, index) => (
               <OptionCard
                 key={index}
@@ -144,38 +143,38 @@ const QuizPage: React.FC = () => {
 
         {/* Timer expired warning */}
         {hasAnswered && selectedOption === null && (
-          <div className="flex items-center gap-2 p-4 rounded-lg bg-destructive/10 text-destructive mb-6 animate-fade-in">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p className="text-sm font-medium">Time's up! This question will be marked as unanswered.</p>
+          <div className="flex items-center gap-2 p-3 md:p-4 rounded-lg bg-destructive/10 text-destructive mb-4 md:mb-6 animate-fade-in">
+            <AlertCircle className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+            <p className="text-xs md:text-sm font-medium">Time's up! This question will be marked as unanswered.</p>
           </div>
         )}
 
         {/* Navigation Buttons */}
-        <div className="flex gap-4 justify-between">
-          <div className="text-sm text-muted-foreground self-center">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 sm:justify-between sm:items-center">
+          <div className="text-xs md:text-sm text-muted-foreground text-center sm:text-left order-2 sm:order-1">
             {userAnswers.length} of {quizData.totalQuestions} answered
           </div>
           
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3 order-1 sm:order-2">
             {isLastQuestion ? (
               <Button 
                 variant="hero" 
                 size="lg"
                 onClick={handleSubmitClick}
-                className="group"
+                className="group flex-1 sm:flex-none"
               >
                 Submit Quiz
-                <Send className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                <Send className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:translate-x-1" />
               </Button>
             ) : (
               <Button 
                 variant="default" 
                 size="lg"
                 onClick={handleNext}
-                className="group"
+                className="group flex-1 sm:flex-none"
               >
                 Next Question
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:translate-x-1" />
               </Button>
             )}
           </div>
