@@ -29,12 +29,12 @@ const CategoryPage: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Hero gradient background */}
       <div className="bg-gradient-hero">
-        <div className="container mx-auto px-4 py-6 md:py-8">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8">
           {/* Header */}
-          <div className="flex items-center gap-4 mb-6 md:mb-8">
+          <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
             <Link 
               to="/" 
-              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
               <span className="text-sm md:text-base">Back</span>
@@ -42,11 +42,11 @@ const CategoryPage: React.FC = () => {
           </div>
 
           {/* Title */}
-          <div className="text-center pb-8 md:pb-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-2 md:mb-3">
+          <div className="text-center pb-6 sm:pb-8 md:pb-12">
+            <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-primary-foreground mb-1.5 sm:mb-2 md:mb-3">
               Choose a Category
             </h1>
-            <p className="text-primary-foreground/80 text-sm md:text-lg">
+            <p className="text-primary-foreground/80 text-xs sm:text-sm md:text-lg px-2">
               Select a topic to start your quiz adventure
             </p>
           </div>
@@ -54,7 +54,7 @@ const CategoryPage: React.FC = () => {
       </div>
 
       {/* Categories Grid */}
-      <main className="flex-1 container mx-auto px-4 -mt-6 md:-mt-8 pb-8 md:pb-12">
+      <main className="flex-1 container mx-auto px-3 sm:px-4 -mt-4 sm:-mt-6 md:-mt-8 pb-6 sm:pb-8 md:pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {quizCategories.map((category, index) => (
             <QuizCard
