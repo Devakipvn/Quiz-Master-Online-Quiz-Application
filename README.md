@@ -1,6 +1,6 @@
 # 🎯 Quiz Master – Online Quiz Application
 
-🚀 **Quiz Master** is a modern, full-stack interactive quiz platform designed to make learning fun, engaging, and competitive.  
+**Quiz Master** is a modern, full-stack interactive quiz platform designed to make learning fun, engaging, and competitive.  
 Users can explore quizzes by category, attempt timed challenges, track their scores instantly, and enjoy a smooth animated UI experience.
 
 ---
